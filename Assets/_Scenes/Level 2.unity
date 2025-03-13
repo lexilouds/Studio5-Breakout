@@ -2211,6 +2211,8 @@ MonoBehaviour:
   maxLives: 3
   ball: {fileID: 4561635119993004754}
   bricksContainer: {fileID: 796630123}
+  explosionEffect: {fileID: 6756732282675929043, guid: 2df4dedecee1344eabcc0f8abf2fe390, type: 3}
+  explosionSound: {fileID: 8300000, guid: 644fcab76abc346cabe47e747b579698, type: 3}
 --- !u!1001 &1708692028
 PrefabInstance:
   m_ObjectHideFlags: 0
