@@ -48,6 +48,8 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
         currentBrickCount--;
         Debug.Log($"Destroyed Brick at {position}, {currentBrickCount}/{totalBrickCount} remaining");
+
+        
         if(currentBrickCount == 0) SceneHandler.Instance.LoadNextScene();
     }
 
