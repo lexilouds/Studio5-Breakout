@@ -7,6 +7,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     [SerializeField] private Transform bricksContainer;
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private AudioClip explosionSound;
+    
 
     private int currentBrickCount;
     private int totalBrickCount;
@@ -34,8 +35,8 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         // fire audio here
         // implement particle effect here
         // add camera shake here
-
-          if (explosionEffect != null)
+        CameraShake.Instance.Shake(0.2f, 0.5f);
+        if (explosionEffect != null)
         {
             Instantiate(explosionEffect, position, Quaternion.identity);
         }
@@ -49,8 +50,8 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         currentBrickCount--;
         Debug.Log($"Destroyed Brick at {position}, {currentBrickCount}/{totalBrickCount} remaining");
 
-        
-        if(currentBrickCount == 0) SceneHandler.Instance.LoadNextScene();
+
+        if (currentBrickCount == 0) SceneHandler.Instance.LoadNextScene();
     }
 
     public void KillBall()
