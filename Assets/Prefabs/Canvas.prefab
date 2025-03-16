@@ -154,9 +154,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current: {fileID: 4454994848441114717}
   toUpdate: {fileID: 3690642955176213491}
+  scoreText: {fileID: 3886769450742789533}
   scoreTextContainer: {fileID: 7128944962466701202}
-  duration: 0.4
-  animationCurve: 0
+  durationCount: 0.4
+  pulseCount: 0.2
+  scaleFactor: 1.2
+  numberCurve: 0
+  textCurve: 0
 --- !u!1 &4388636108005076379
 GameObject:
   m_ObjectHideFlags: 0
