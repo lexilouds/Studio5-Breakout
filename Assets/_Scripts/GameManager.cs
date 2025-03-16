@@ -7,10 +7,12 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     [SerializeField] private Transform bricksContainer;
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private AudioClip explosionSound;
+    [SerializeField] private ScoreCounterUI scoreCounter;
     
 
     private int currentBrickCount;
     private int totalBrickCount;
+    private int score;
 
     private void OnEnable()
     {
@@ -48,8 +50,9 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
 
         currentBrickCount--;
+        score = totalBrickCount - currentBrickCount;
         Debug.Log($"Destroyed Brick at {position}, {currentBrickCount}/{totalBrickCount} remaining");
-
+        scoreCounter.UpdateScore(score);
 
         if (currentBrickCount == 0) SceneHandler.Instance.LoadNextScene();
     }
