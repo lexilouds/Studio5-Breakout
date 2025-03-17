@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using TMPro;
 
 public class GameManager : SingletonMonoBehavior<GameManager>
 {
@@ -8,11 +11,16 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private AudioClip explosionSound;
     [SerializeField] private ScoreCounterUI scoreCounter;
-    
+    // [SerializeField] private TextMeshProUGUI livesText;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private Image[] lifeIcons;
+    [SerializeField] private Sprite fullHeartSprite;
+    [SerializeField] private Sprite emptyHeartSprite;
 
     private int currentBrickCount;
     private int totalBrickCount;
     private int score;
+    private int currentLives;
 
     private void OnEnable()
     {
@@ -20,6 +28,8 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         ball.ResetBall();
         totalBrickCount = bricksContainer.childCount;
         currentBrickCount = bricksContainer.childCount;
+        currentLives = maxLives; // Initialize lives
+        UpdateLivesUI(); // Update hearts at start
     }
 
     private void OnDisable()
@@ -59,9 +69,57 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
     public void KillBall()
     {
-        maxLives--;
-        // update lives on HUD here
-        // game over UI if maxLives < 0, then exit to main menu after delay
-        ball.ResetBall();
+        // maxLives--;
+        // // update lives on HUD here
+        // // game over UI if maxLives < 0, then exit to main menu after delay
+        // ball.ResetBall();
+
+        currentLives--;
+        UpdateLivesUI();
+
+        if (currentLives <= 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            ball.ResetBall();
+        }
+
     }
+
+    private void UpdateLivesUI()
+    {
+        // if (livesText != null)
+        // {
+        //     livesText.text = "Lives: " + currentLives;
+        // }
+
+        for (int i = 0; i < lifeIcons.Length; i++)
+        {
+            if (i < currentLives)
+            {
+                lifeIcons[i].sprite = fullHeartSprite; // Full heart if life is available
+            }
+            else
+            {
+                lifeIcons[i].sprite = emptyHeartSprite; // Empty heart when life is lost
+            }
+        }
+
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0; // Freeze game
+        gameOverScreen.SetActive(true); // Show Game Over UI
+        StartCoroutine(ReturnToMenu());
+    }
+    private IEnumerator ReturnToMenu()
+    {
+        yield return new WaitForSecondsRealtime(1.5f);
+        Time.timeScale = 1; // Reset time
+        SceneHandler.Instance.LoadMenuScene();
+    }
+
 }
