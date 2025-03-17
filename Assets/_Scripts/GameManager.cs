@@ -12,7 +12,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     [SerializeField] private AudioClip explosionSound;
     [SerializeField] private ScoreCounterUI scoreCounter;
     [SerializeField] private TextMeshProUGUI livesText;
-
+    [SerializeField] private GameObject gameOverScreen;
     private int currentBrickCount;
     private int totalBrickCount;
     private int score;
@@ -75,7 +75,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
         if (currentLives <= 0)
         {
-
+            GameOver();
         }
         else
         {
@@ -92,7 +92,12 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         }
     }
 
-
+    private void GameOver()
+    {
+        Time.timeScale = 0; // Freeze game
+        gameOverScreen.SetActive(true); // Show Game Over UI
+        StartCoroutine(ReturnToMenu());
+    }
     private IEnumerator ReturnToMenu()
     {
         yield return new WaitForSecondsRealtime(1.5f);
