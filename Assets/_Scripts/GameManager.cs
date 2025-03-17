@@ -11,8 +11,12 @@ public class GameManager : SingletonMonoBehavior<GameManager>
     [SerializeField] private GameObject explosionEffect;
     [SerializeField] private AudioClip explosionSound;
     [SerializeField] private ScoreCounterUI scoreCounter;
-    [SerializeField] private TextMeshProUGUI livesText;
+    // [SerializeField] private TextMeshProUGUI livesText;
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private Image[] lifeIcons;
+    [SerializeField] private Sprite fullHeartSprite;
+    [SerializeField] private Sprite emptyHeartSprite;
+
     private int currentBrickCount;
     private int totalBrickCount;
     private int score;
@@ -25,7 +29,7 @@ public class GameManager : SingletonMonoBehavior<GameManager>
         totalBrickCount = bricksContainer.childCount;
         currentBrickCount = bricksContainer.childCount;
         currentLives = maxLives; // Initialize lives
-        UpdateLivesUI(); // Update UI at start
+        UpdateLivesUI(); // Update hearts at start
     }
 
     private void OnDisable()
@@ -86,10 +90,23 @@ public class GameManager : SingletonMonoBehavior<GameManager>
 
     private void UpdateLivesUI()
     {
-        if (livesText != null)
+        // if (livesText != null)
+        // {
+        //     livesText.text = "Lives: " + currentLives;
+        // }
+
+        for (int i = 0; i < lifeIcons.Length; i++)
         {
-            livesText.text = "Lives: " + currentLives;
+            if (i < currentLives)
+            {
+                lifeIcons[i].sprite = fullHeartSprite; // Full heart if life is available
+            }
+            else
+            {
+                lifeIcons[i].sprite = emptyHeartSprite; // Empty heart when life is lost
+            }
         }
+
     }
 
     private void GameOver()
